@@ -15,7 +15,6 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.enable-lifecycle'
       - '--log.level=info'
-      - '--alertmanager.url=http://alertmanager:9093'
     ports:
       - "9090:9090"
     depends_on:
