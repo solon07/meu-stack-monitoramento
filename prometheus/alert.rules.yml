@@ -1,0 +1,33 @@
+groups:
+- name: host_alerts
+  rules:
+  # Alerta: CPU Alta
+  - alert: HostHighCpuLoad
+    expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 85
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host high CPU load (instance {{ $labels.instance }})"
+      description: "CPU load is > 85% for the last 2 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # Alerta: RAM Alta
+  - alert: HostHighMemoryLoad
+    expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 10
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host high memory usage (instance {{ $labels.instance }})"
+      description: "Memory available is < 10% for the last 2 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # Alerta: Disco Alto
+  - alert: HostHighDiskSpaceUsage
+    expr: (node_filesystem_avail_bytes{mountpoint="/",fstype!="tmpfs"} / node_filesystem_size_bytes{mountpoint="/",fstype!="tmpfs"}) * 100 < 10
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host high disk space usage (instance {{ $labels.instance }}, mountpoint {{ $labels.mountpoint }})"
+      description: "Disk space available is < 10% on mountpoint {{ $labels.mountpoint }} for the last 5 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
