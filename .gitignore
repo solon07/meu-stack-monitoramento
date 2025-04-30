@@ -1,0 +1,32 @@
+# Arquivos de Log
+*.log
+*.log.*
+
+# Arquivos gerados pelo SO
+.DS_Store
+Thumbs.db
+
+# Arquivos específicos de IDEs / Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Dados que devem ficar nos volumes do Docker
+prometheus_data/
+alertmanager_data/
+grafana_data/
+
+# Arquivos comuns de Python
+venv/
+*.pyc
+__pycache__/
+
+# Arquivos comuns do Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Arquivos de build ou dependências
+node_modules/
+vendor/
